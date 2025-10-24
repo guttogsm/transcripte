@@ -79,6 +79,8 @@ Inicie o servidor local:
 
 
 uvicorn api\_transcricao:app --reload
+ou
+python -m uvicorn api_transcricao:app --reload
 
 
 
