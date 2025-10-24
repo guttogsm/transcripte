@@ -1,0 +1,13 @@
+# permitir scripts se ativação falhar (apenas uma vez)
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+
+iniciar api
+uvicorn api_transcricao:app --reload
+
+No campo link, cole o link, abrir o vídeo em outra aba 
+
+https://drive.google.com/uc?id=SEU_ID_DO_VIDEO
+https://drive.google.com/uc?id=1bexnhqKSYEeHykPHwxM4xaHVak6-VMe0
+
+
+http://127.0.0.1:8000/docs#/

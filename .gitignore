@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+
+# Ambiente
+.venv/
+.env
+*.env
+
+# Cache/modelos Whisper
+whisper_cache/
+modelos_cache/
+cache/
+*.pt
+*.bin
+
+# Uploads (mantém a pasta vazia no repo)
+uploads/
+!uploads/.gitkeep
+
+# Mídia grande (evitar no Git; use LFS se precisar)
+*.mp4
+*.wav
+*.m4a
+*.mov
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,87 @@
+
+DOCUMENTO TÉCNICO — Correção e Otimização da Transcrição do Vídeo “stefany (2160p).mp4”
+
+Objetivo:
+Garantir a transcrição integral e contínua do vídeo utilizando modelos Whisper, corrigindo o problema de pulos ou cortes de trechos falados, especialmente após pausas longas no áudio.
+
+------------------------------------------------------------
+1. Diagnóstico inicial
+------------------------------------------------------------
+Sintoma: Transcrição omitia falas entre 00:02:22 e 00:02:36.
+Causa: VAD (Voice Activity Detection) cortava trechos de baixa energia.
+
+------------------------------------------------------------
+2. Ambiente de desenvolvimento
+------------------------------------------------------------
+Sistema: Windows 11
+Python: 3.13 (64-bit)
+Local: C:\transcripte
+
+Dependências principais:
+ - ffmpeg 8.0
+ - torch 2.9.0+cpu
+ - torchaudio 2.9.0+cpu
+ - openai-whisper 20250625
+ - numpy 2.3.4
+ - fastapi / uvicorn
+
+------------------------------------------------------------
+3. Comandos executados
+------------------------------------------------------------
+Ativação do venv:
+    .\.venv\Scripts\Activate.ps1
+
+Limpeza:
+    python -m pip uninstall -y whisper openai-whisper numpy torch torchaudio
+
+Instalação:
+    python -m pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
+    python -m pip install git+https://github.com/openai/whisper.git@main
+    python -m pip install numpy==2.3.4 --only-binary=:all:
+
+------------------------------------------------------------
+4. Teste do trecho com Whisper original
+------------------------------------------------------------
+Extração:
+    ffmpeg -i "stefany (2160p).mp4" -ss 00:02:20 -to 00:02:40 -vn -acodec pcm_s16le -ar 16000 -ac 1 stefany_trecho_0220_0240.wav
+
+Resultado: Trecho final recuperado com sucesso.
+
+------------------------------------------------------------
+5. Correções aplicadas
+------------------------------------------------------------
+- Substituição do modelo faster-whisper → openai-whisper
+- Remoção de vad_filter=True
+- Adição de:
+    no_speech_threshold=0.0
+    condition_on_previous_text=False
+    logprob_threshold=-2.0
+    compression_ratio_threshold=2.4
+
+------------------------------------------------------------
+6. Resultado final
+------------------------------------------------------------
+Trecho recuperado:
+“Apresente-se para a comunidade, pergunte para a comunidade, profissionais do futuro...”
+
+Transcrição final completa e fiel ao áudio original.
+
+------------------------------------------------------------
+7. Arquivos atualizados
+------------------------------------------------------------
+ - api_transcricao.py (API FastAPI)
+ - transcripte.py (módulo de transcrição principal)
+ - stefany (2160p)_transcricao.txt (resultado completo)
+
+------------------------------------------------------------
+8. Recomendações futuras
+------------------------------------------------------------
+ - Exportar legendas .srt e .vtt automaticamente
+ - Adicionar logs de pausas > 2s
+ - Usar faster-whisper apenas para streaming
+ - Considerar modelos medium/large-v3 para máxima precisão
+
+------------------------------------------------------------
+Autor:
+Assistente Técnico GPT-5 – Transcrição de Vídeos e Projetos de IA
+Data: 23 de outubro de 2025
